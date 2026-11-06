@@ -1,54 +1,43 @@
 # MediShare 💊
-
 ### Smart Medicine Inventory & Expiry Management System
 
-MediShare is a web-based medicine management application designed to help individuals and families organize their medicine inventory, monitor expiry dates, track stock levels, and reduce medicine wastage.
+MediShare is a web-based medicine management application that helps individuals and families organize their medicine inventory, monitor expiry dates, track stock levels and reduce medicine wastage.
 
 ## ✨ Features
 
-- **Medicine Inventory Management** – Add, view, edit, search and delete medicine records.
-- **Expiry Tracking** – Monitor expired, expiring-soon and safe medicines.
-- **Expiry Rescue System** – Identify medicines that need attention before expiry.
-- **Low Stock Alerts** – Get notifications for medicines running low or out of stock.
-- **Medicine Usage Tracking** – Record medicine consumption and update stock.
-- **Refill Management** – Track replenishments and refill history.
-- **Family Management** – Manage medicine assignments for family members.
-- **Calendar View** – Monitor important medicine expiry dates.
-- **Wastage Analytics** – View expiry trends, inventory breakdowns and potential wastage.
-- **Expense Tracking** – Monitor initial purchase costs, refill expenditure and spending trends.
-- **Medicine Passport** – Access medicine-related information through the passport feature.
-- **Prescription Scanner** – Support prescription-related medicine management.
-- **Smart Storage Guidance** – View storage-related guidance for medicines.
-- **AI Medicine Scanner** – Gemini Vision API integration for extracting medicine details from package images (integration under development).
+- **Medicine Management:** Add, view, edit, search and delete medicines.
+- **Expiry Tracking:** Monitor expired, expiring-soon and safe medicines.
+- **Expiry Rescue:** Identify medicines that need attention before expiry.
+- **Stock & Usage Tracking:** Record medicine usage, monitor low stock and manage refills.
+- **Family Management:** Assign medicines to family members.
+- **Calendar:** Track important medicine expiry dates.
+- **Analytics:** Monitor medicine wastage, inventory and expenses.
+- **Medicine Passport:** Access medicine-related information.
+- **Prescription Scanner:** Support prescription-related medicine management.
+- **Smart Storage:** Get medicine storage guidance.
+- **AI Medicine Scanner:** Use Gemini Vision API to extract medicine details from package images.
 
 ## 🛠️ Tech Stack
 
-**Frontend**
-- React.js
-- Vite
-- JavaScript
-- CSS
+| Category | Technologies |
+|---|---|
+| Frontend | React.js, Vite, JavaScript, CSS |
+| Backend | Node.js, Express.js |
+| Database | MongoDB Atlas, Mongoose |
+| AI Integration | Google Gemini API |
+| Development Tools | VS Code, Git, GitHub, Postman |
+| Deployment | Render |
 
-**Backend**
-- Node.js
-- Express.js
+## 🔗 Project Links
 
-**Database**
-- MongoDB Atlas
-- Mongoose
-
-**AI Integration**
-- Google Gemini API
-
-**Development Tools**
-- Visual Studio Code
-- Git and GitHub
-- Postman
+- **Live Website:** https://medishare-1-dpyb.onrender.com
+- **Backend API:** https://medishare-zp75.onrender.com
+- **GitHub Repository:** https://github.com/advitiandanur10-byte/MediShare-
 
 ## 📁 Project Structure
 
 ```text
-medishare/
+MediShare/
 │
 ├── client/
 │   ├── public/
@@ -72,30 +61,28 @@ medishare/
 
 ## ⚙️ Installation and Setup
 
-### 1. Clone the repository
+**1. Clone the repository**
 
 ```bash
 git clone https://github.com/advitiandanur10-byte/MediShare-.git
 cd MediShare-
 ```
 
-### 2. Install frontend dependencies
+**2. Install dependencies**
 
+Frontend:
 ```bash
 cd client
 npm install
 ```
 
-### 3. Install backend dependencies
-
-Open another terminal:
-
+Backend (in a separate terminal):
 ```bash
 cd server
 npm install
 ```
 
-### 4. Configure environment variables
+**3. Configure environment variables**
 
 Create a `.env` file inside the `server` folder:
 
@@ -105,39 +92,33 @@ GEMINI_API_KEY=your_gemini_api_key
 PORT=5000
 ```
 
-Use your own credentials. Never upload your `.env` file or expose API keys publicly.
+**4. Start the application**
 
-### 5. Start the backend
-
-From the `server` directory:
-
+Backend:
 ```bash
+cd server
 node server.js
 ```
 
-### 6. Start the frontend
-
-From the `client` directory:
-
+Frontend (in another terminal):
 ```bash
+cd client
 npm run dev
 ```
 
-Open the local URL displayed by Vite, usually:
+Open the local URL provided by Vite, usually `http://localhost:5173`.
 
-```text
-http://localhost:5173
-```
+**Note:** Never upload your `.env` file or expose your API keys publicly.
 
-## 🔮 Future Enhancements
+## 🚀 Future Enhancements
 
-- Complete and improve AI-based medicine recognition.
-- Improve prescription-to-inventory reconciliation.
-- Enhance QR-based medicine identification.
-- Add more intelligent medicine safety and inventory insights.
+- Improve AI-based medicine recognition.
+- Enhance prescription-to-inventory reconciliation.
+- Expand QR-based medicine identification.
+- Add more intelligent medicine insights.
 
-## 👩‍💻 Project
+## 👩‍💻 MediShare
 
-**MediShare – Care • Share • Save**
+**Care • Share • Save**
 
-A project focused on smarter medicine management, responsible usage and reducing medicine wastage.
+A project focused on smarter medicine management, responsible medicine usage and reducing household medicine wastage.
