@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getFamilyMembers } from "../services/familyService";
 
+const API_URL = "https://medishare-zp75.onrender.com/api/medicines";
+
 function AddMedicine() {
   const navigate = useNavigate();
 
@@ -85,16 +87,13 @@ function AddMedicine() {
         assignedTo: formData.assignedTo || null,
       };
 
-      const response = await fetch(
-        "http://localhost:5000/api/medicines",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(medicineData),
-        }
-      );
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(medicineData),
+      });
 
       const data = await response.json();
 

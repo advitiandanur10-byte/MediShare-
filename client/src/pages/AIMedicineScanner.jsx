@@ -1,7 +1,6 @@
-
 import { useEffect, useRef, useState } from "react";
 
-const API_URL = "http://localhost:5000/api/ai-medicine/scan";
+const API_URL = "https://medishare-zp75.onrender.com/api/ai-medicine/scan";
 
 const detailFields = [
   ["medicineName", "Medicine Name"],

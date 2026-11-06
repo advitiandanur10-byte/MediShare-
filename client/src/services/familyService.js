@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:5000/api/family";
+const API_URL = "https://medishare-zp75.onrender.com/api/family";
 
 // Get all family members
 export const getFamilyMembers = async () => {

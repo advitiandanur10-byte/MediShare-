@@ -1,5 +1,5 @@
 
-const API_URL = "http://localhost:5000/api/medicines";
+const API_URL = "https://medishare-zp75.onrender.com/api/medicines";
 
 // Get medicines grouped by expiry priority
 export const getPriorityMedicines = async () => {
