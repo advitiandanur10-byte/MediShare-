@@ -37,10 +37,29 @@ const getExpiryInfo = (expiryDate) => {
 };
 
 
-// 1. ADD MEDICINE (CREATE)
+// 1. ADD MEDICINE AND RECORD INITIAL PURCHASE EXPENSE
 router.post("/", async (req, res) => {
     try {
-        const medicine = new Medicine(req.body);
+        const initialPurchaseAmount = Number(
+            req.body.initialPurchaseAmount
+        );
+
+        if (
+            req.body.initialPurchaseAmount === undefined ||
+            req.body.initialPurchaseAmount === null ||
+            req.body.initialPurchaseAmount === "" ||
+            !Number.isFinite(initialPurchaseAmount) ||
+            initialPurchaseAmount < 0
+        ) {
+            return res.status(400).json({
+                message: "Please enter a valid initial purchase amount."
+            });
+        }
+
+        const medicine = new Medicine({
+            ...req.body,
+            initialPurchaseAmount
+        });
 
         const savedMedicine = await medicine.save();
 
@@ -57,7 +76,7 @@ router.post("/", async (req, res) => {
 });
 
 
-// 2. VIEW ALL MEDICINES (READ)
+// 2. VIEW ALL MEDICINES
 router.get("/", async (req, res) => {
     try {
         const medicines = await Medicine.find();
@@ -76,7 +95,8 @@ router.get("/", async (req, res) => {
     }
 });
 
-// PRIORITY INVENTORY
+
+// 3. PRIORITY INVENTORY
 router.get("/priority", async (req, res) => {
     try {
         const medicines = await Medicine.find();
@@ -102,20 +122,15 @@ router.get("/priority", async (req, res) => {
 
             if (daysLeft < 0) {
                 categorizedMedicines.expired.push(medicineData);
-            }
-            else if (daysLeft === 0) {
+            } else if (daysLeft === 0) {
                 categorizedMedicines.expiringToday.push(medicineData);
-            }
-            else if (daysLeft <= 7) {
+            } else if (daysLeft <= 7) {
                 categorizedMedicines.expiringIn7Days.push(medicineData);
-            }
-            else if (daysLeft <= 15) {
+            } else if (daysLeft <= 15) {
                 categorizedMedicines.expiringIn15Days.push(medicineData);
-            }
-            else if (daysLeft <= 30) {
+            } else if (daysLeft <= 30) {
                 categorizedMedicines.expiringIn30Days.push(medicineData);
-            }
-            else {
+            } else {
                 categorizedMedicines.safeMedicines.push(medicineData);
             }
         });
@@ -130,7 +145,70 @@ router.get("/priority", async (req, res) => {
 });
 
 
-// 3. VIEW MEDICINE BY ID (READ)
+// 4. REFILL MEDICINE AND RECORD PURCHASE EXPENSE
+router.post("/:id/refill", async (req, res) => {
+    try {
+        const quantityAdded = Number(req.body.quantityAdded);
+        const amountPaid = Number(req.body.amountPaid);
+
+        if (
+            !Number.isFinite(quantityAdded) ||
+            quantityAdded <= 0
+        ) {
+            return res.status(400).json({
+                message: "Refill quantity must be greater than zero."
+            });
+        }
+
+        if (
+            req.body.amountPaid === undefined ||
+            req.body.amountPaid === null ||
+            req.body.amountPaid === "" ||
+            !Number.isFinite(amountPaid) ||
+            amountPaid < 0
+        ) {
+            return res.status(400).json({
+                message: "Please enter a valid purchase amount."
+            });
+        }
+
+        const medicine = await Medicine.findById(req.params.id);
+
+        if (!medicine) {
+            return res.status(404).json({
+                message: "Medicine not found."
+            });
+        }
+
+        const previousQuantity = medicine.quantity;
+        const newQuantity = previousQuantity + quantityAdded;
+
+        medicine.quantity = newQuantity;
+
+        medicine.refillHistory.push({
+            quantityAdded,
+            previousQuantity,
+            newQuantity,
+            amountPaid,
+            refillDate: new Date()
+        });
+
+        await medicine.save();
+
+        res.status(200).json({
+            message: "Medicine refilled and purchase expense recorded successfully!",
+            medicine
+        });
+
+    } catch (error) {
+        res.status(400).json({
+            message: error.message
+        });
+    }
+});
+
+
+// 5. VIEW MEDICINE BY ID
 router.get("/:id", async (req, res) => {
     try {
         const medicine = await Medicine.findById(req.params.id);
@@ -156,7 +234,7 @@ router.get("/:id", async (req, res) => {
 });
 
 
-// 4. UPDATE MEDICINE (UPDATE)
+// 6. UPDATE MEDICINE
 router.put("/:id", async (req, res) => {
     try {
         const medicine = await Medicine.findByIdAndUpdate(
@@ -176,7 +254,7 @@ router.put("/:id", async (req, res) => {
 
         res.status(200).json({
             message: "Medicine updated successfully!",
-            medicine: medicine
+            medicine
         });
 
     } catch (error) {
@@ -187,7 +265,7 @@ router.put("/:id", async (req, res) => {
 });
 
 
-// 5. DELETE MEDICINE (DELETE)
+// 7. DELETE MEDICINE
 router.delete("/:id", async (req, res) => {
     try {
         const medicine = await Medicine.findByIdAndDelete(
